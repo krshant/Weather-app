@@ -1,10 +1,9 @@
 import './App.css';
+import Page from './Pages/index'
 
 function App() {
   return (
-    <div className="App">
-      <h1>Website Under Maintenance</h1>
-    </div>
+    <Page />
   );
 }
 
