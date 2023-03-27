@@ -11,7 +11,7 @@ function Pages() {
     }, []);
 
     const getWeather = async (value) => {
-        const res = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${value?.name},india&appid=c9e665c7ee66f8e8f8f64cc1fcdc165b`);
+        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value?.name},india&appid=c9e665c7ee66f8e8f8f64cc1fcdc165b`);
         const json = await res.json();
         setCitySelectedData(json)
         console.log('json', json)
