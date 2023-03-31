@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -12,15 +12,16 @@ const SearchComponent = (props) => {
 
     return (
         <Autocomplete
-            // disablePortal
+            autocomplete="off"
             id="combo-box-demo"
+            sx={{ width: "400px" }}
             value={isSelected}
             options={CityList || []}
             getOptionLabel={(option) => option.name}
             onChange={(val, selected) => handleSelected(val, selected)}
-            sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="City" />}
+            renderInput={(params) => <TextField {...params} />}
         />
+
 
     )
 }
