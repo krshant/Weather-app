@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./index.scss"
 import SearchComponent from './Components/search'
 
 function Pages() {
@@ -17,19 +18,22 @@ function Pages() {
         console.log('json', json)
     }
     return (
-        <div>
-            <h1>Weather App</h1>
-            <SearchComponent
-                isSelected={cityName}
-                setIsSelected={setCityName}
-                getWeather={getWeather}
-            />
-            <div>
+        <div className="container">
+            <h1 className="header">Weather App</h1>
+            <div className="search-box">
+                <SearchComponent
+                    isSelected={cityName}
+                    setIsSelected={setCityName}
+                    getWeather={getWeather}
+                />
+            </div>
+
+            <div className="content">
                 <p>City Name: {citySelectedData?.name}</p>
                 <p>Temprature: {citySelectedData?.main?.temp}</p>
                 <p>Sunrise: {citySelectedData?.sys?.sunrise}</p>
                 <p>Sunset: {citySelectedData?.sys?.sunset}</p>
-                {/* <p>Description: {citySelectedData?.weather[0]?.description}</p> */}
+                {/* <p>Description: {citySelectedData?.weather[0]?.description}</p>*/}
             </div>
         </div>
     )
