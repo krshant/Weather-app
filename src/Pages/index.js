@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./index.scss"
 import SearchComponent from './Components/search'
+import background from './../img/sky.jpg'
 
 function Pages() {
 
