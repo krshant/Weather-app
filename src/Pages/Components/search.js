@@ -1,6 +1,8 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import Box from "@mui/material/Box";
+
 
 const SearchComponent = (props) => {
     const { isSelected, setIsSelected, getWeather } = props
@@ -14,15 +16,14 @@ const SearchComponent = (props) => {
         <Autocomplete
             autocomplete="off"
             id="combo-box-demo"
-            sx={{ width: "400px" }}
+            sx={{ p: '2px 4px', display: 'flex', width: 400, m:'0 auto'}}
             value={isSelected}
             options={CityList || []}
             getOptionLabel={(option) => option.name}
             onChange={(val, selected) => handleSelected(val, selected)}
+            clearIcon={false}
             renderInput={(params) => <TextField {...params} />}
         />
-
-
     )
 }
 export default SearchComponent
