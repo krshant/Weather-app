@@ -6,23 +6,28 @@ import Footer from "./footer";
 import Weatherdata from "./Components/weatherList";
 
 function Pages() {
-  const [cityName, setCityName] = useState({ id: "", name: "kolkata" });
-  const [citySelectedData, setCitySelectedData] = useState({});
+  const [locationInfo, setLocationInfo] = useState({});
+  const [locationKeyword, setLocationKeyword] = useState("");
 
-  useEffect(() => {
-    getWeather(cityName);
-  }, []);
-
-  const getWeather = async (value) => {
+  // Function for fetch location information 
+  const getWeatherInfo = async () => {
     const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${value?.name},india&appid=c9e665c7ee66f8e8f8f64cc1fcdc165b`
+      `https://api.openweathermap.org/data/2.5/weather?q=${locationKeyword},india&appid=c9e665c7ee66f8e8f8f64cc1fcdc165b`
     );
     const json = await res.json();
-    setCitySelectedData(json);
     console.log("json", json);
+    setLocationInfo(json);
   };
+
   return (
-    <Box sx={{ maxWidth: "1440px", m: "0px auto", width: "80%" }}>
+    <Box
+      sx={{
+        maxWidth: "1440px",
+        m: "0px auto",
+        width: "80%",
+        bgcolor: "#2ae899",
+      }}
+    >
       <Grid container spacing={0}>
         <Grid xs={12} md={12}>
           <Box>
@@ -37,18 +42,36 @@ function Pages() {
         </Grid>
         <Grid xs={12} md={12}>
           <Box sx={{ bgcolor: "#33F5FF", height: "620px" }}>
-            <Box sx={{p:3}}>
-            <SearchComponent
-              isSelected={cityName}
-              setIsSelected={setCityName}
-              getWeather={getWeather}
-            />
+            <Box sx={{ p: 3 }}>
+              <SearchComponent
+                locationKeyword={locationKeyword}
+                setLocationKeyword={setLocationKeyword}
+                getWeatherInfo={getWeatherInfo}
+              />
             </Box>
             <Box>
-            <Weatherdata citySelectedData={citySelectedData} />
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <Box
+                  height={360}
+                  width={800}
+                  my={4}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  gap={3}
+                  p={2}
+                  sx={{
+                    border: "2px solid white",
+                    borderRadius: "10px",
+                    bgcolor: "#ffffff",
+                  }}
+                >
+                  <Weatherdata locationInfo={locationInfo} />
+                </Box>
+              </Box>
             </Box>
           </Box>
-          </Grid>
+        </Grid>
         <Grid xs={12} md={12}>
           <Footer />
         </Grid>

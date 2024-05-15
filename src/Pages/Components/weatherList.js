@@ -1,17 +1,29 @@
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
+import CloudIcon from "@mui/icons-material/Cloud";
 
-function Weatherdata({citySelectedData}){
-    return(
-        <Box>
-            <Box className="content">
-             <p>City Name: {citySelectedData?.name}</p>
-             <p>Temprature: {citySelectedData?.main?.temp}</p>
-             <p>Sunrise: {citySelectedData?.sys?.sunrise}</p>
-             <p>Sunset: {citySelectedData?.sys?.sunset}</p>
-             {/* <p>Description: {citySelectedData?.weather[0]?.description}</p>*/}
-         </Box>
-        </Box>
-    )
+function Weatherdata({ locationInfo }) {
+  return (
+    <Box>
+      {/* <Typography>{locationInfo?.name}</Typography> */}
+      <Box display="flex">
+        <Typography variant="h2">
+          <CloudIcon style={{ width: "140", height: "140" }} />{" "}
+          {locationInfo?.clouds?.all}&deg;C
+        </Typography>
+      </Box>
+      <Box>
+        <Typography variant="h3">
+          {locationInfo?.weather[0]?.main},&nbsp;{locationInfo?.name}
+        </Typography>
+      </Box>
+      <Box>
+        <Typography variant="subtitle2">
+          Wind speed: {locationInfo?.wind?.speed} km/h
+        </Typography>
+      </Box>
+    </Box>
+  );
 }
 
 export default Weatherdata;
