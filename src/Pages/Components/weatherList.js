@@ -5,7 +5,6 @@ import CloudIcon from "@mui/icons-material/Cloud";
 function Weatherdata({ locationInfo }) {
   return (
     <Box>
-      {/* <Typography>{locationInfo?.name}</Typography> */}
       <Box display="flex">
         <Typography variant="h2">
           <CloudIcon style={{ width: "140", height: "140" }} />{" "}

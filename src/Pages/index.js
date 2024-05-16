@@ -12,17 +12,23 @@ function Pages() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [city, setCity] = useState("");
+  const [isLoadingInfo, setisLoadingInfo] = useState(true);
 
   // Function for fetch location information
   const getWeatherInfo = async (key, text) => {
-    const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${
-        key ? text : locationKeyword
-      },india&appid=c9e665c7ee66f8e8f8f64cc1fcdc165b`
-    );
-    const json = await res.json();
-    console.log("json", json);
-    setLocationInfo(json);
+    setisLoadingInfo(true);
+    try {
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${
+          key ? text : locationKeyword
+        },india&appid=c9e665c7ee66f8e8f8f64cc1fcdc165b`
+      );
+      const json = await res.json();
+      setLocationInfo(json);
+      setisLoadingInfo(false);
+    } catch (error) {
+      console.log(error, "error");
+    }
   };
 
   useEffect(() => {
@@ -50,6 +56,7 @@ function Pages() {
   useEffect(() => {
     if (latitude && longitude) {
       const fetchCity = async () => {
+        setisLoadingInfo(true);
         try {
           const response = await axios.get(
             "https://api.opencagedata.com/geocode/v1/json",
@@ -118,7 +125,15 @@ function Pages() {
                     bgcolor: "#ffffff",
                   }}
                 >
-                  <Weatherdata locationInfo={locationInfo} />
+                  {isLoadingInfo ? (
+                    <Typography variant="h4">
+                      Please wait data is loading..
+                    </Typography>
+                  ) : locationInfo?.message?.toString() === "city not found" ? (
+                    <Typography variant="h4">City not found!</Typography>
+                  ) : (
+                    <Weatherdata locationInfo={locationInfo} />
+                  )}
                 </Box>
               </Box>
             </Box>
