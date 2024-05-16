@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const SearchComponent = (props) => {
     return (
-        <Paper
+        <Paper  
             component="form"
             sx={{ p: '2px 4px', display: 'flex', width: 500, m:'0 auto'}}
         >
@@ -17,7 +17,7 @@ const SearchComponent = (props) => {
               onChange={(e) => props?.setLocationKeyword(e.target.value)}
             />
             <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-              <SearchIcon onClick={props?.getWeatherInfo}/>
+              <SearchIcon onClick={() => props?.getWeatherInfo(false, "")}/>
             </IconButton>
         </Paper>
     )

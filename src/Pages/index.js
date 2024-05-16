@@ -4,20 +4,72 @@ import { Grid, Typography } from "@mui/material";
 import SearchComponent from "./Components/search";
 import Footer from "./footer";
 import Weatherdata from "./Components/weatherList";
+import axios from "axios";
 
 function Pages() {
   const [locationInfo, setLocationInfo] = useState({});
   const [locationKeyword, setLocationKeyword] = useState("");
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [city, setCity] = useState("");
 
-  // Function for fetch location information 
-  const getWeatherInfo = async () => {
+  // Function for fetch location information
+  const getWeatherInfo = async (key, text) => {
     const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${locationKeyword},india&appid=c9e665c7ee66f8e8f8f64cc1fcdc165b`
+      `https://api.openweathermap.org/data/2.5/weather?q=${
+        key ? text : locationKeyword
+      },india&appid=c9e665c7ee66f8e8f8f64cc1fcdc165b`
     );
     const json = await res.json();
     console.log("json", json);
     setLocationInfo(json);
   };
+
+  useEffect(() => {
+    if (city?.length) {
+      getWeatherInfo(true, city);
+    }
+  }, [city]);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        },
+        (error) => {
+          console.error("Error obtaining geolocation", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (latitude && longitude) {
+      const fetchCity = async () => {
+        try {
+          const response = await axios.get(
+            "https://api.opencagedata.com/geocode/v1/json",
+            {
+              params: {
+                q: `${latitude}+${longitude}`,
+                key: "6777a4497a1046039b2620cf07abe11a",
+              },
+            }
+          );
+          const city = response.data.results[0].components.city;
+          setCity(city);
+          setLocationKeyword(city);
+        } catch (error) {
+          console.error("Error fetching city data", error);
+        }
+      };
+      fetchCity();
+    }
+  }, [latitude, longitude]);
 
   return (
     <Box

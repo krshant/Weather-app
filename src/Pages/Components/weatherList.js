@@ -13,9 +13,13 @@ function Weatherdata({ locationInfo }) {
         </Typography>
       </Box>
       <Box>
-        <Typography variant="h3">
-          {locationInfo?.weather[0]?.main},&nbsp;{locationInfo?.name}
-        </Typography>
+        {locationInfo?.weather?.length ? (
+          <Typography variant="h3">
+            {locationInfo?.weather[0]?.main},&nbsp;{locationInfo?.name}
+          </Typography>
+        ) : (
+          ""
+        )}
       </Box>
       <Box>
         <Typography variant="subtitle2">
